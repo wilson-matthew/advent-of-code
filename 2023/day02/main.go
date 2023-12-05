@@ -105,8 +105,30 @@ func sumOfPossibleGameIds(allGames []string) int {
 	return sumOfGameIds
 }
 
+func powerOfFewestCubesRequiredForGame(rounds []string) int {
+	maxRedInGame := maxNumberOfDiceDrawnInGame(rounds, "red")
+	maxGreenInGame := maxNumberOfDiceDrawnInGame(rounds, "green")
+	maxBlueInGame := maxNumberOfDiceDrawnInGame(rounds, "blue")
+
+	return maxRedInGame * maxGreenInGame * maxBlueInGame
+}
+
+func sumOfPowers(allGames []string) int {
+	var sumOfPowers int
+
+	for _, game := range allGames {
+
+		rounds := retrieveRounds(game)
+		sumOfPowers += powerOfFewestCubesRequiredForGame(rounds)
+	}
+
+	return sumOfPowers
+}
+
 func main() {
 	allGames, _ := readLines("./input.txt")
-	solution := sumOfPossibleGameIds(allGames)
-	fmt.Println(solution)
+	partOneSolution := sumOfPossibleGameIds(allGames)
+	fmt.Println("Part one solution:", partOneSolution)
+	partTwoSolution := sumOfPowers(allGames)
+	fmt.Println("Part two solution:", partTwoSolution)
 }
